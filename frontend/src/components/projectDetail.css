@@ -1,0 +1,32 @@
+.project-detail {
+    text-align: center;
+    padding: 20px;
+  }
+  
+  .project-detail img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+  
+  .project-detail h2 {
+    margin-top: 20px;
+    font-size: 2rem;
+  }
+  
+  .project-detail p {
+    margin: 20px 0;
+  }
+  
+  .project-detail a {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+  }
+  
+  .project-detail a:hover {
+    background-color: #0056b3;
+  }
+  

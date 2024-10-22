@@ -11,12 +11,23 @@
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   }
   
   .project-card img {
     max-width: 100%;
     height: auto;
     border-radius: 5px;
+    transition: opacity 0.3s ease;
+  }
+  
+  .project-card img:hover {
+    opacity: 0.9;
   }
   
   .project-card h2 {
@@ -36,9 +47,22 @@
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
+    transition: background-color 0.3s ease;
   }
   
   .project-card a:hover {
     background-color: #0056b3;
+  }
+  
+  @media (max-width: 768px) {
+    .project-list {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .project-card h2 {
+      font-size: 1.2rem;
+    }
   }
   

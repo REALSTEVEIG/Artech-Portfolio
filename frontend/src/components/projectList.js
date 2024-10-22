@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./projectList.css";
 
 const ProjectList = ({ projects }) => {
@@ -9,9 +10,7 @@ const ProjectList = ({ projects }) => {
           <img src={project.image_url} alt={project.title} />
           <h2>{project.title}</h2>
           <p>{project.description}</p>
-          <a href={project.project_url} target="_blank" rel="noopener noreferrer">
-            View Project
-          </a>
+          <Link to={`/projects/${project.id}`}>View More</Link>
         </div>
       ))}
     </div>

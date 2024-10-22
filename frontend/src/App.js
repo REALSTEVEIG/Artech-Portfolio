@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import "./App.css";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProjectList from "./components/projectList";
+import ProjectDetail from "./components/projectDetail";
+import "./App.css";
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -13,12 +15,17 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <header>
-        <h1>My Portfolio</h1>
-      </header>
-      <ProjectList projects={projects} />
-    </div>
+    <Router>
+      <div className="App">
+        <header>
+          <h1>My Portfolio</h1>
+        </header>
+        <Routes>
+          <Route path="/" element={<ProjectList projects={projects} />} />
+          <Route path="/projects/:id" element={<ProjectDetail />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 

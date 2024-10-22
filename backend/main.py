@@ -1,5 +1,8 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker, Session
 
 app = FastAPI()
 
@@ -11,45 +14,38 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-projects = [
-    {
-        "id": 1,
-        "title": "Portfolio Website",
-        "description": "A personal portfolio showcasing my skills and projects.",
-        "image_url": "https://via.placeholder.com/150",
-        "project_url": "https://example.com/portfolio"
-    },
-    {
-        "id": 2,
-        "title": "E-commerce Platform",
-        "description": "An e-commerce website for buying and selling products.",
-        "image_url": "https://via.placeholder.com/150",
-        "project_url": "https://example.com/ecommerce"
-    },
-    {
-        "id": 3,
-        "title": "Social Media App",
-        "description": "A social media platform to connect with friends and share updates.",
-        "image_url": "https://via.placeholder.com/150",
-        "project_url": "https://example.com/socialmedia"
-    },
-    {
-        "id": 4,
-        "title": "Task Management Tool",
-        "description": "A tool to manage and track tasks for teams and individuals.",
-        "image_url": "https://via.placeholder.com/150",
-        "project_url": "https://example.com/taskmanagement"
-    },
-    {
-        "id": 5,
-        "title": "Blog Platform",
-        "description": "A platform for users to write and share blog posts.",
-        "image_url": "https://via.placeholder.com/150",
-        "project_url": "https://example.com/blog"
-    }
-]
+DATABASE_URL = "sqlite:///./projects.db"
+engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+Base = declarative_base()
+
+class Project(Base):
+    __tablename__ = "projects"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, index=True)
+    description = Column(String)
+    image_url = Column(String)
+    project_url = Column(String)
+
+Base.metadata.create_all(bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 @app.get("/projects")
-def get_projects():
+def get_projects(db: Session = Depends(get_db)):
+    projects = db.query(Project).all()
     return projects
 
+@app.get("/projects/{project_id}")
+def get_project(project_id: int, db: Session = Depends(get_db)):
+    project = db.query(Project).filter(Project.id == project_id).first()
+    if project is None:
+        return {"error": "Project not found"}
+    return project
