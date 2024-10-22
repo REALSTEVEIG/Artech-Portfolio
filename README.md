@@ -1,8 +1,4 @@
-```md
-# Portfolio Showcase: FastAPI Backend and React Frontend
-
-This is a web portfolio application using FastAPI for the backend and React for the frontend. The application displays a list of projects with individual detail pages.
-
+```
 ## Backend: FastAPI
 
 ### Prerequisites
@@ -12,47 +8,10 @@ This is a web portfolio application using FastAPI for the backend and React for 
 - Uvicorn
 - SQLAlchemy (for SQLite integration)
 
-### Setting Up the Backend
-
-1. **Install Dependencies:**
-   Navigate to the `backend` directory and install the dependencies listed in `requirements.txt`:
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-2. **Run the Backend Server:**
-   To start the backend, run the following command from the `backend` directory:
-
-   ```bash
-   uvicorn main:app --reload
-   ```
-
-   The FastAPI server will be available at `http://localhost:8000`.
-
-3. **Seed the Database:**
-   To seed the database with sample project data, run:
-
-   ```bash
-   python populate_db.py
-   ```
-
 ### Available Endpoints
 
 - `GET /projects`: Retrieve a list of all projects.
 - `GET /projects/{id}`: Retrieve details of a specific project by ID.
-
-### Backend Structure
-
-```
-backend/
-├── main.py           # FastAPI app
-├── populate_db.py    # Seeder for project data
-├── requirements.txt  # Python dependencies
-└── README.md         # Backend instructions
-```
-
----
 
 ## Frontend: React
 
@@ -63,22 +22,6 @@ backend/
 
 ### Setting Up the Frontend
 
-1. **Install Dependencies:**
-   Navigate to the `frontend` directory and install the dependencies:
-
-   ```bash
-   npm install
-   ```
-
-2. **Run the Frontend Development Server:**
-   Start the development server:
-
-   ```bash
-   npm start
-   ```
-
-   The React app will be available at `http://localhost:3000`.
-
 ### Features
 
 - **Project List:** Displays a list of projects fetched from the backend API.
@@ -87,26 +30,7 @@ backend/
 - **Responsive Design:** Fully responsive layout with CSS grid and Flexbox.
 - **Animations:** Includes hover effects and transitions.
 
-### Frontend Structure
-
-```
-frontend/
-├── public/
-├── src/
-│   ├── components/
-│   │   ├── ProjectList.js
-│   │   ├── ProjectDetail.js
-│   │   └── projectList.css
-│   ├── App.js
-│   ├── App.css
-│   └── index.js
-├── package.json
-└── README.md
-```
-
----
-
-## Running the Full Application
+## Running the Application
 
 1. **Start the Backend:**
    ```bash
@@ -127,14 +51,4 @@ frontend/
 3. **Access the Application:**
    Open `http://localhost:3000` in your browser to see the list of projects and navigate to the project detail pages.
 
----
-
-## Conclusion
-
-This project is fully functional and includes:
-
-- FastAPI backend with a `/projects` API.
-- React frontend that fetches and displays project data.
-- Project detail pages and search functionality.
-- Responsive design with animations and transitions.
 ```
