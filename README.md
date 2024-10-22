@@ -1,4 +1,3 @@
-```
 ## Backend: FastAPI
 
 ### Prerequisites
@@ -50,5 +49,3 @@
 
 3. **Access the Application:**
    Open `http://localhost:3000` in your browser to see the list of projects and navigate to the project detail pages.
-
-```
