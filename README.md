@@ -1,14 +1,7 @@
-Portfolio Showcase: FastAPI Backend and React Frontend
+```md
+# Portfolio Showcase: FastAPI Backend and React Frontend
 
 This is a web portfolio application using FastAPI for the backend and React for the frontend. The application displays a list of projects with individual detail pages.
-
-Project Structure
-
-WEB PORTFOLIO/
-├── backend/   # FastAPI backend
-├── frontend/  # React frontend
-└── README.md  # General project instructions
-```
 
 ## Backend: FastAPI
 
