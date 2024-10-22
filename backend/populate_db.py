@@ -3,6 +3,9 @@ from main import Project, SessionLocal, engine
 
 def seed_db():
     db: Session = SessionLocal()
+
+    db.query(Project).delete()
+
     projects = [
         Project(
             title="Portfolio Website",
@@ -35,6 +38,7 @@ def seed_db():
             project_url= "https://example.com/blog"
         )
     ]
+
     db.bulk_save_objects(projects)
     db.commit()
 
