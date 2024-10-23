@@ -2,7 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./projectList.css";
 
-const ProjectList = ({ projects }) => {
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  image_url: string;
+}
+
+interface ProjectListProps {
+  projects: Project[];
+}
+
+const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
   return (
     <div className="project-list">
       {projects.map((project) => (

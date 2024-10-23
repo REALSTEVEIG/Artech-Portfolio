@@ -4,15 +4,23 @@ import ProjectList from "./components/projectList";
 import ProjectDetail from "./components/projectDetail";
 import "./App.css";
 
+interface Project {
+  id: number;
+  title: string;
+  description: string;
+  image_url: string;
+  project_url: string;
+}
+
 function App() {
-  const [projects, setProjects] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filteredProjects, setFilteredProjects] = useState([]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>([]);
 
   useEffect(() => {
     fetch("http://localhost:8000/projects")
       .then((response) => response.json())
-      .then((data) => {
+      .then((data: Project[]) => {
         setProjects(data);
         setFilteredProjects(data);
       })
