@@ -24,7 +24,23 @@ test("renders the list of projects", () => {
       <ProjectList projects={mockProjects} />
     </MemoryRouter>
   );
-  
+
   const projectTitles = screen.getAllByText(/Project/i);
   expect(projectTitles.length).toBe(2);
+  expect(screen.getByText(/Description for project 1/i)).toBeInTheDocument();
+  expect(screen.getByText(/Description for project 2/i)).toBeInTheDocument();
+});
+
+test("renders project cards with correct links", () => {
+  render(
+    <MemoryRouter>
+      <ProjectList projects={mockProjects} />
+    </MemoryRouter>
+  );
+
+  const projectLinks = screen.getAllByRole('link', { name: /View More/i });
+  expect(projectLinks.length).toBe(2);
+
+  expect(projectLinks[0].getAttribute('href')).toBe('/projects/1');
+  expect(projectLinks[1].getAttribute('href')).toBe('/projects/2');
 });

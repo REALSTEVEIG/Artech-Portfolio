@@ -1,13 +1,13 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import App from "./App";
-import { BrowserRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router-dom";
 
 test("renders the portfolio header", () => {
   render(
-    <BrowserRouter>
+    <MemoryRouter>
       <App />
-    </BrowserRouter>
+    </MemoryRouter>
   );
   const headerElement = screen.getByText(/My Portfolio/i);
   expect(headerElement).toBeInTheDocument();
@@ -15,9 +15,9 @@ test("renders the portfolio header", () => {
 
 test("renders the search input", () => {
   render(
-    <BrowserRouter>
+    <MemoryRouter>
       <App />
-    </BrowserRouter>
+    </MemoryRouter>
   );
   const searchInput = screen.getByPlaceholderText("Search projects...");
   expect(searchInput).toBeInTheDocument();

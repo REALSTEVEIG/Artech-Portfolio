@@ -33,7 +33,14 @@ test("renders project details", async () => {
 
   const titleElement = await screen.findByText(/Mock Project/i);
   expect(titleElement).toBeInTheDocument();
-  
+
   const descriptionElement = await screen.findByText(/Mock project description/i);
   expect(descriptionElement).toBeInTheDocument();
+
+  const imageElement = screen.getByAltText(/Mock Project/i);
+  expect(imageElement).toBeInTheDocument();
+  expect(imageElement).toHaveAttribute('src', 'https://via.placeholder.com/150');
+
+  const projectLink = screen.getByRole('link', { name: /Visit Project/i });
+  expect(projectLink).toHaveAttribute('href', 'https://example.com');
 });
