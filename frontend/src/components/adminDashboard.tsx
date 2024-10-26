@@ -76,20 +76,25 @@ const AdminDashboard: React.FC = () => {
         Add New Project
       </button>
       {selectedProject ? (
-        <AdminProjectForm
-          project={selectedProject}
-          onSave={(project) => {
-            if (project.id) {
-              updateProject(project);
-            } else {
-              createProject(project);
-            }
-            setSelectedProject(null);
-          }}
-        />
-      ) : (
-        <AdminProjectForm onSave={createProject} />
-      )}
+    <div className="project-form-container">
+    <AdminProjectForm
+      project={selectedProject}
+      onSave={(project) => {
+        if (project.id) {
+          updateProject(project);
+        } else {
+          createProject(project);
+        }
+        setSelectedProject(null);
+      }}
+    />
+        </div>
+        ) : (
+        <div className="project-form-container">
+            <AdminProjectForm onSave={createProject} />
+        </div>
+        )}
+
       <div className="project-list">
         {projects.map((project) => (
           <div className="project-item" key={project.id}>
