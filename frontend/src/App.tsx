@@ -5,6 +5,7 @@ import ProjectDetail from "./components/projectDetail";
 import Login from "./components/login";
 import Signup from "./components/signup";
 import Navbar from "./components/navbar";
+import AdminDashboard from "./components/adminDashboard";
 import ProtectedRoute from "./components/protectedRoutes";
 import { AuthProvider } from "./context/authContext";
 import "./App.css";
@@ -40,14 +41,11 @@ function App() {
             <Route path="/projects/:id" element={<ProjectDetail />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
-            <Route
-              path="/admin"
-              element={
-                <ProtectedRoute>
-                  <ProjectList projects={projects} />
-                </ProtectedRoute>
-              }
-            />
+            <Route path="/admin" element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            } />
           </Routes>
         </div>
       </Router>

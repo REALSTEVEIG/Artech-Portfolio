@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import AdminProjectForm from "./adminProjectForm";
 import "./adminDashboard.css";
 
 interface Project {
-  id: number;
+  id?: number;
   title: string;
   description: string;
   image_url: string;
@@ -11,66 +12,91 @@ interface Project {
 
 const AdminDashboard: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
-  const [projectUrl, setProjectUrl] = useState("");
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   useEffect(() => {
     fetchProjects();
   }, []);
 
   const fetchProjects = async () => {
-    const response = await fetch("http://localhost:8000/projects");
-    const data = await response.json();
-    setProjects(data);
+    try {
+      const response = await fetch("http://localhost:8000/projects");
+      const data = await response.json();
+      setProjects(data);
+    } catch (error) {
+      console.error("Error fetching projects:", error);
+    }
   };
 
-  const handleAddProject = async () => {
-    const newProject = { title, description, image_url: imageUrl, project_url: projectUrl };
-    await fetch("http://localhost:8000/projects", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(newProject),
-    });
-    fetchProjects();
-    resetForm();
+  const createProject = async (project: Project) => {
+    try {
+      await fetch("http://localhost:8000/projects", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(project),
+      });
+      fetchProjects();
+    } catch (error) {
+      console.error("Error creating project:", error);
+    }
   };
 
-  const handleDeleteProject = async (id: number) => {
-    await fetch(`http://localhost:8000/projects/${id}`, { method: "DELETE" });
-    fetchProjects();
+  const updateProject = async (project: Project) => {
+    if (project.id !== undefined) {
+      try {
+        await fetch(`http://localhost:8000/projects/${project.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(project),
+        });
+        fetchProjects();
+      } catch (error) {
+        console.error("Error updating project:", error);
+      }
+    }
   };
 
-  const resetForm = () => {
-    setTitle("");
-    setDescription("");
-    setImageUrl("");
-    setProjectUrl("");
+  const deleteProject = async (id?: number) => {
+    if (id !== undefined) {
+      try {
+        await fetch(`http://localhost:8000/projects/${id}`, {
+          method: "DELETE",
+        });
+        fetchProjects();
+      } catch (error) {
+        console.error("Error deleting project:", error);
+      }
+    }
   };
 
   return (
     <div className="admin-dashboard">
       <h2>Admin Dashboard</h2>
-      
-      <div className="project-form">
-        <h3>Add New Project</h3>
-        <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
-        <input type="text" placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
-        <input type="text" placeholder="Image URL" value={imageUrl} onChange={(e) => setImageUrl(e.target.value)} />
-        <input type="text" placeholder="Project URL" value={projectUrl} onChange={(e) => setProjectUrl(e.target.value)} />
-        <button onClick={handleAddProject}>Add Project</button>
-      </div>
-
-      <div className="project-list">
-        <h3>Existing Projects</h3>
+      <button onClick={() => setSelectedProject(null)}>Add New Project</button>
+      {selectedProject ? (
+        <AdminProjectForm
+          project={selectedProject}
+          onSave={(project) => {
+            if (project.id) {
+              updateProject(project);
+            } else {
+              createProject(project);
+            }
+            setSelectedProject(null);
+          }}
+        />
+      ) : (
+        <AdminProjectForm onSave={createProject} />
+      )}
+      <ul>
         {projects.map((project) => (
-          <div key={project.id} className="project-item">
-            <h4>{project.title}</h4>
-            <button onClick={() => handleDeleteProject(project.id)}>Delete</button>
-          </div>
+          <li key={project.id}>
+            <h3>{project.title}</h3>
+            <button onClick={() => setSelectedProject(project)}>Edit</button>
+            <button onClick={() => deleteProject(project.id)}>Delete</button>
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };
