@@ -33,7 +33,7 @@ jobs:
       - name: Zip artifact for deployment
         run: |
           cd backend
-          zip -r ../release.zip .  # Zip the entire backend directory, including antenv
+          zip -r ../release.zip ./*
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
@@ -66,7 +66,14 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_AA5609F9229F40F99FFAB1AE8AC889D1 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_44B65039853F424E9B069989E49C3D2F }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: Create and activate virtual environment on Azure
+        run: |
+          cd backend
+          python -m venv antenv
+          source antenv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
