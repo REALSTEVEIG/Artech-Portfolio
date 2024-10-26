@@ -153,6 +153,10 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
         raise credentials_exception
     return user
 
+@app.get("/")
+def read_root():
+    return {"Hello": "Welcome to my portfolio app backend."}
+
 # Authentication Endpoints
 @app.post("/auth/signup", response_model=UserResponse)
 def signup(user: UserCreate, db: Session = Depends(get_db)):
