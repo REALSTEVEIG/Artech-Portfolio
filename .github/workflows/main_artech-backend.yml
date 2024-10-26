@@ -30,21 +30,19 @@ jobs:
       
       - name: Install dependencies
         run: |
-          cd backend      # <--- Ensure the backend directory is set here too
+          cd backend
           pip install -r requirements.txt
         
       - name: Zip artifact for deployment
         run: |
-          cd backend      # <--- Specify backend directory before zipping
-          zip release.zip ./* -r
+          cd backend
+          zip -r ../release.zip ./*
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
           name: python-app
-          path: |
-            backend/release.zip   # <--- Adjusted to backend/release.zip
-            !backend/venv/
+          path: release.zip
 
   deploy:
     runs-on: ubuntu-latest
@@ -62,7 +60,7 @@ jobs:
           name: python-app
 
       - name: Unzip artifact for deployment
-        run: unzip backend/release.zip
+        run: unzip release.zip -d backend
 
       - name: Login to Azure
         uses: azure/login@v2
