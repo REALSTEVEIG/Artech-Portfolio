@@ -24,24 +24,27 @@ jobs:
 
       - name: Create and start virtual environment
         run: |
+          cd backend
           python -m venv venv
           source venv/bin/activate
       
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          cd backend      # <--- Ensure the backend directory is set here too
+          pip install -r requirements.txt
         
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
-
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+        run: |
+          cd backend      # <--- Specify backend directory before zipping
+          zip release.zip ./* -r
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
         with:
           name: python-app
           path: |
-            release.zip
-            !venv/
+            backend/release.zip   # <--- Adjusted to backend/release.zip
+            !backend/venv/
 
   deploy:
     runs-on: ubuntu-latest
@@ -50,7 +53,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write
 
     steps:
       - name: Download artifact from build job
@@ -59,9 +62,8 @@ jobs:
           name: python-app
 
       - name: Unzip artifact for deployment
-        run: unzip release.zip
+        run: unzip backend/release.zip
 
-      
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -75,4 +77,3 @@ jobs:
         with:
           app-name: 'artech-backend'
           slot-name: 'Production'
-          
