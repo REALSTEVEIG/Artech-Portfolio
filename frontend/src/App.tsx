@@ -34,7 +34,7 @@ function App() {
         <Navbar />
         <div className="App">
           <header>
-            <h1>My Portfolio</h1>
+            <h1>Portfolio</h1>
           </header>
           <Routes>
             <Route path="/" element={<ProjectList projects={projects} />} />
