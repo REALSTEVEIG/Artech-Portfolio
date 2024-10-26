@@ -72,7 +72,9 @@ const AdminDashboard: React.FC = () => {
   return (
     <div className="admin-dashboard">
       <h2>Admin Dashboard</h2>
-      <button onClick={() => setSelectedProject(null)}>Add New Project</button>
+      <button className="add-project-button" onClick={() => setSelectedProject(null)}>
+        Add New Project
+      </button>
       {selectedProject ? (
         <AdminProjectForm
           project={selectedProject}
@@ -88,15 +90,15 @@ const AdminDashboard: React.FC = () => {
       ) : (
         <AdminProjectForm onSave={createProject} />
       )}
-      <ul>
+      <div className="project-list">
         {projects.map((project) => (
-          <li key={project.id}>
+          <div className="project-item" key={project.id}>
             <h3>{project.title}</h3>
             <button onClick={() => setSelectedProject(project)}>Edit</button>
             <button onClick={() => deleteProject(project.id)}>Delete</button>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
