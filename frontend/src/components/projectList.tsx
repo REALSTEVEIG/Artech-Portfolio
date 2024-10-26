@@ -26,7 +26,7 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
   }, [searchTerm, projects]);
 
   return (
-    <div className="project-list">
+    <div>
       <input
         type="text"
         placeholder="Search projects..."
@@ -34,14 +34,16 @@ const ProjectList: React.FC<ProjectListProps> = ({ projects }) => {
         onChange={(e) => setSearchTerm(e.target.value)}
         className="search-input"
       />
-      {filteredProjects.map((project) => (
-        <div key={project.id} className="project-card">
-          <img src={project.image_url} alt={project.title} />
-          <h2>{project.title}</h2>
-          <p>{project.description}</p>
-          <Link to={`/projects/${project.id}`}>View More</Link>
+        <div className="project-list">
+          {filteredProjects.map((project) => (
+            <div key={project.id} className="project-card">
+              <img src={project.image_url} alt={project.title} />
+              <h2>{project.title}</h2>
+              <p>{project.description}</p>
+              <Link to={`/projects/${project.id}`}>View More</Link>
+            </div>
+          ))}
         </div>
-      ))}
     </div>
   );
 };
