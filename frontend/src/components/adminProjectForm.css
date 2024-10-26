@@ -22,7 +22,7 @@
     border-radius: 6px;
     outline: none;
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    width: 100%;
+    width: auto;
     background-color: #f9f9f9;
   }
   
