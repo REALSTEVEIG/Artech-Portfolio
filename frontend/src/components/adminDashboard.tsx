@@ -72,9 +72,6 @@ const AdminDashboard: React.FC = () => {
   return (
     <div className="admin-dashboard">
       <h2>Admin Dashboard</h2>
-      <button className="add-project-button" onClick={() => setSelectedProject(null)}>
-        Add New Project
-      </button>
       {selectedProject ? (
     <div className="project-form-container">
     <AdminProjectForm
